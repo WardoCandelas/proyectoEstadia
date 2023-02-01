@@ -17,7 +17,7 @@
     
     $.ajax({
               type: "POST",
-              url: "archivo/nuevoExpediente",
+              url: "expediente/nuevoExpediente",
               success: function(response) {
                   $('#main-derecha').html(response);
                   //$('#navbarCollapse').collapse('hide');
