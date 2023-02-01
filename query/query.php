@@ -18,7 +18,7 @@ return $resultado;
 
 function getExpedientesBusqueda($con, $q){
 $dir = array();
-$queryExpedientes="SELECT * FROM expedientes WHERE id LIKE '%$q%'";
+$queryExpedientes="SELECT * FROM expedientes WHERE id LIKE '%$q%' OR nombreExpediente LIKE '%$q%' OR claveExpediente LIKE '%$q%' OR numeroExpediente LIKE '%$q%' OR yearExpediente LIKE '%$q%'";
 $array=mysqli_query($con, $queryExpedientes);
 
 
