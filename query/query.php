@@ -2,7 +2,7 @@
 function getExpedientes($con){
 
 $dir = array();
-$queryExpedientes="SELECT * FROM archivos_listado";
+$queryExpedientes="SELECT * FROM expedientes";
 $array=mysqli_query($con, $queryExpedientes);
 while ($row = mysqli_fetch_assoc($array)) {
 
@@ -18,7 +18,7 @@ return $resultado;
 
 function getExpedientesBusqueda($con, $q){
 $dir = array();
-$queryExpedientes="SELECT * FROM archivos_listado WHERE id LIKE '%$q%'";
+$queryExpedientes="SELECT * FROM expedientes WHERE id LIKE '%$q%'";
 $array=mysqli_query($con, $queryExpedientes);
 
 
