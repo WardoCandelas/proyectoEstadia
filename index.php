@@ -1,5 +1,6 @@
 <?php 
 session_start();
+//Validamos si el usuario esta logeado, para que no pueda acceder a el index desde el URL
 if(empty($_SESSION['id_usuario'])){
     header("location: login");
 }
