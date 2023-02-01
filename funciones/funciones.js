@@ -13,11 +13,11 @@
 }
 
 
-  function nuevoArchivo() {
+  function nuevoExpediente() {
     
     $.ajax({
               type: "POST",
-              url: "archivo/nuevoArchivo",
+              url: "archivo/nuevoExpediente",
               success: function(response) {
                   $('#main-derecha').html(response);
                   //$('#navbarCollapse').collapse('hide');
