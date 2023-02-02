@@ -2,7 +2,7 @@
 ?>
 <script type="text/javascript" src="funciones/funciones.js"></script>
 <form class="form-control" id="nuevoExpediente" name="nuevoExpediente">
-
+<h4 class="text-center">Nuevo Expediente</h4>
 
 <div class="row">
 <div class="col-md-6">

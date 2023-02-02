@@ -42,8 +42,7 @@ session_start();
     <th>Nombre</th>
     <th>Clave</th>
     <th>Numero</th>
-    <th>Ano</th>
-    <th>Hojas</th>
+    <th>Año</th>
     <th></th>
 </tr>
 </thead>
@@ -56,7 +55,7 @@ foreach (getExpedientes($con) as $value) {
     <td><?php echo $value['claveExpediente']?></td>
     <td><b><?php echo $value['numeroExpediente']?></b></td>
     <td><b><?php echo $value['yearExpediente']?></b></td>
-    <td><button type="button" class="btn btn-danger" onclick="detalleExpediente('<?php echo $value['id']; ?>')"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></button></td>
+    <td><button type="button" class="btn btn-danger" onclick="nuevoArchivoFormulario('<?php echo $value['id']; ?>')"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></button></td>
 </tr>
 
 <?php } ?>

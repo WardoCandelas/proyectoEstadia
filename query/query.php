@@ -35,6 +35,25 @@ return $resultado;
 }
 
 
+function getExpedientesId($con, $id){
+$dir = array();
+$queryExpedientes="SELECT * FROM expedientes WHERE id = '$id'";
+$array=mysqli_query($con, $queryExpedientes);
+
+
+while ($row = mysqli_fetch_assoc($array)) {
+
+        $dir[] = $row;   
+}
+
+$dirJson = json_encode($dir);
+$resultado = json_decode($dirJson, true);
+
+return $resultado;
+
+}
+
+
 function getArchivosDeExpediente($con, $id){
 $dir = array();
 $queryExpedientes="SELECT nombre_archivo, ruta_archivo FROM archivos WHERE id_expediente = '$id'";

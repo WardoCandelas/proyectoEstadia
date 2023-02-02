@@ -13,11 +13,11 @@
 }
 
 
-  function nuevoExpediente() {
+  function expedientes() {
     
     $.ajax({
               type: "POST",
-              url: "expediente/nuevoExpediente",
+              url: "expediente/expedientesListadoDetalle",
               success: function(response) {
                   $('#main-derecha').html(response);
                   //$('#navbarCollapse').collapse('hide');
@@ -106,3 +106,27 @@ function detalleExpediente(id){
           });
                 event.preventDefault();
               })
+
+
+ //Nuevo Archivo Formulario
+ function nuevoArchivoFormulario(id){
+
+        $.ajax({
+          type: "POST",
+          url: "archivo/formularioArchivo",
+          data: "id="+id,
+          beforeSend: function(objeto){
+            $("#expediente").html("Mensaje: Cargando...");
+            
+          },
+          success: function(datos){
+            $("#expediente").html(datos);
+             //$('#delete_data').attr("disabled", true);
+             //elementt.style.display='block';
+                //$('#save_data1').attr("disabled", false);
+                
+              }
+            });
+        event.preventDefault();
+    
+ }

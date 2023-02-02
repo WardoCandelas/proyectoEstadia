@@ -5,7 +5,21 @@ include "../query/query.php";
 session_start();
 
 $q = $_POST['q'];
+?>
 
+<script type="text/javascript" src="funciones/funciones.js"></script>
+<table class="table table-borderless">
+<thead class="encabezadotabla">
+<tr>
+    <th></th>
+    <th>Nombre</th>
+    <th>Clave</th>
+    <th>Numero</th>
+    <th>Año</th>
+    <th></th>
+</tr>
+</thead>
+<?php 
 foreach (getExpedientesBusqueda($con, $q) as $value) {
 ?>
 <tr>
@@ -14,7 +28,7 @@ foreach (getExpedientesBusqueda($con, $q) as $value) {
     <td><?php echo $value['claveExpediente']?></td>
     <td><b><?php echo $value['numeroExpediente']?></b></td>
     <td><b><?php echo $value['yearExpediente']?></b></td>
-    <td><button type="button" class="btn btn-danger"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></button></td>
+    <td><button type="button" class="btn btn-danger" onclick="nuevoArchivoFormulario('<?php echo $value['id']; ?>')"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></button></td>
 </tr>
 
 <?php } ?>
