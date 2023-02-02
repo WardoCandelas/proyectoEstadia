@@ -55,7 +55,6 @@
                   },
                   success: function(datos){
                     $("#expediente").html(datos);
-              //load(1);
               
             }
           });
@@ -87,3 +86,22 @@ function detalleExpediente(id){
         event.preventDefault();
     
  }
+
+//Nuevo Expediente
+ $("#nuevoExpediente").submit(function(event) {
+                var parametros = $(this).serialize();
+                
+                $.ajax({
+                  type: "POST",
+                  url: "expediente/nuevoExpedienteAction",
+                  data: parametros,
+                  beforeSend: function(objeto){
+                    $("#expediente").html("Mensaje: Creando...");
+                  },
+                  success: function(datos){
+                    $("#expediente").html(datos);
+              
+            }
+          });
+                event.preventDefault();
+              })
