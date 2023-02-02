@@ -1,6 +1,5 @@
 <?php 
 session_start();
-//Validamos si el usuario esta logeado, para que no pueda acceder a el index
 if(empty($_SESSION['id_usuario'])){
     header("location: login");
 }
@@ -48,7 +47,7 @@ if(empty($_SESSION['id_usuario'])){
                       <a href="javascript:void(0)" class="nav-item nav-link" onclick="avisos()" style="color:white;"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
                 </li>
                 <li class="nav-item">
-                      <a  href="javascript:void(0)" class="nav-item nav-link" onclick="expedientes()" style="color:white;"><i class="fa fa-folder" aria-hidden="true"></i></a>
+                      <a  href="javascript:void(0)" class="nav-item nav-link" onclick="nuevoArchivo()" style="color:white;"><i class="fa fa-folder" aria-hidden="true"></i></a>
                 </li>
                 <li class="nav-item">
                       <a href="javascript:void(0)" class="nav-item nav-link" onclick="validarArchivo()" style="color:white;"><i class="fa fa-check-circle" aria-hidden="true"></i></a>

@@ -13,9 +13,9 @@ $expedienteId = $_POST['id'];
                     <form name="form1" id="form1" method="post" action="guarda.php" enctype="multipart/form-data">
                     	<?php
                         foreach (getExpedientesId($con, $expedienteId) as $value) {
-?>
-<h4 class="text-center">Cargar Multiple Archivos -> <?php echo $value['nombreExpediente']."-".$value['claveExpediente']."-".$value['numeroExpediente']."-".$value['yearExpediente']; ?></h4>
-<?php } ?>
+                        $rutaExpediente = $value['nombreExpediente']."-".$value['claveExpediente']."-".$value['numeroExpediente']."-".$value['yearExpediente'];   
+} ?>                      
+<h4 class="text-center">Cargar Multiple Archivos -> <?php echo $rutaExpediente ?></h4>
               
                         
                         <div class="form-group">

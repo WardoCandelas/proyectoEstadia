@@ -2,6 +2,8 @@
 include "../conexionBD/conexionBD.php";
 session_start();
 
+
+$idexp = $_POST['id']
 ?>
 
 
@@ -32,68 +34,32 @@ session_start();
     <button class="btn btn-danger" style="color:white" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
   </div></div>
   
-  <div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Archivos</h5>
-    
-    <div class="row">
-    <div class="col-md-3">	
-      <div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Archivo 1</h5>
+<div class="row">
     <?php
 
-$miCuenta="SELECT ruta_archivo FROM archivos";
+$miCuenta="SELECT ruta_archivo FROM archivos where id_expediente = '$idexp'";
 
 $miCuentaAction=mysqli_query($con, $miCuenta);
 //echo $miCuentaAction;
 while ($row=mysqli_fetch_array($miCuentaAction)){
     $imagen=$row['ruta_archivo'];
-}
     ?>
-
-<iframe src="archivos/areaPrueba/archivo.pdf" style="width:100%; height:100%;" frameborder="0" ></iframe>
+<div class="col-md-3">
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Archivos</h5> 
+<iframe src="<?php echo $imagen;?>" style="width:100%; height:100%;" frameborder="0" ></iframe>
     <div class="btn-wrapper text-center">
     <a class="btn btn-success text-white"><i class="fa fa-check-circle-o" aria-hidden="true"></i></a> 
         <a class="btn btn-danger text-white" style=""><i class="fa fa-times" aria-hidden="true"></i></a>
-    </div>
   </div>
 </div>
 </div>
-
-<div class="col-md-3">
-    <div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Archivo 1</h5>
-  </div>
-</div>
 </div>
 
-<div class="col-md-3">
-    <div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Archivo 1</h5>
-  </div>
+<?php } ?>
+
+
+
 </div>
-</div>
-
-
-<div class="col-md-3">
-    <div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Archivo 1</h5>
-  </div>
-</div>
-</div>
-
-
-
-
-
-
-
-  </div>
-</div>
-  
-
 </div>

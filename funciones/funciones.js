@@ -1,4 +1,5 @@
 //Carga de modulos INDEX
+
   function avisos() {
   
   $.ajax({
@@ -12,8 +13,7 @@
         });
 }
 
-
-  function expedientes() {
+  function nuevoArchivo() {
     
     $.ajax({
               type: "POST",
@@ -25,7 +25,6 @@
          
           });
   }
-
 
 
  function validarArchivo() {
@@ -106,6 +105,48 @@ function detalleExpediente(id){
           });
                 event.preventDefault();
               })
+
+
+
+ function nuevoExpediente() {
+    
+    $.ajax({
+              type: "POST",
+              url: "expediente/nuevoExpediente",
+              success: function(response) {
+                  $('#expediente').html(response);
+          
+              }
+         
+          });
+  }
+
+
+//ARCHIVOS
+
+//Detalle de Archivos 
+ function detalleArchivosExpediente(id){
+
+        $.ajax({
+          type: "POST",
+          url: "archivo/validarArchivo",
+          data: "id="+id,
+          beforeSend: function(objeto){
+            $("#main-derecha").html("Mensaje: Cargando...");
+            
+          },
+          success: function(datos){
+            $("#main-derecha").html(datos);
+             //$('#delete_data').attr("disabled", true);
+             //elementt.style.display='block';
+                //$('#save_data1').attr("disabled", false);
+                
+              }
+            });
+        event.preventDefault();
+    
+ }
+
 
 
  //Nuevo Archivo Formulario
