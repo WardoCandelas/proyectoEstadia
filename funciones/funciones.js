@@ -100,6 +100,7 @@ function detalleExpediente(id){
                   },
                   success: function(datos){
                     $("#expediente").html(datos);
+                    $('#reinscripcionFormBoton').attr("disabled", true);
               
             }
           });
