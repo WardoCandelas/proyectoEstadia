@@ -35,10 +35,7 @@
 <div class="col-md-3">	
 <input class = "form-control" type = "text"  maxlength="4" pattern="\d{4}" placeholder = "Año" name="y_e" required>
 </div>
-
-<div class="col-md-3">	
-<input class = "form-control" type = "number"  placeholder = "Hojas" > 
-</div></div>
+</div>
     
 
 

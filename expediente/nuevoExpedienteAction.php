@@ -27,7 +27,7 @@ if (!file_exists($micarpeta)) {
 <?php } else { ?>
 
     <div class="alert alert-danger" role="alert">
-  Algo ha salido mal!
+  Error: El Expediente ya existe!
 </div>
 
 <?php } ?>
