@@ -14,7 +14,6 @@ foreach (getExpedientesBusqueda($con, $q) as $value) {
     <td><?php echo $value['claveExpediente']?></td>
     <td><b><?php echo $value['numeroExpediente']?></b></td>
     <td><b><?php echo $value['yearExpediente']?></b></td>
-    <td><b><?php echo $value['hojasExpediente']?></b></td>
     <td><button type="button" class="btn btn-danger"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></button></td>
 </tr>
 
