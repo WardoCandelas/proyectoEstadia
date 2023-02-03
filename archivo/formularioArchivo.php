@@ -21,6 +21,7 @@ $expedienteId = $_POST['id'];
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Archivos</label>
                             <div class="col-sm-8">
+                                <input type="hidden" name="idExpediente" value="<?php echo $expedienteId; ?>">
                                 <input type="hidden" name="rutaExpediente" value="<?php echo $rutaExpediente; ?>">
                                 <input type="file" class="form-control" id="file-upload" name="archivo[]" multiple="">
                             </div>
