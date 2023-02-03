@@ -44,14 +44,17 @@ $miCuentaAction=mysqli_query($con, $miCuenta);
 while ($row=mysqli_fetch_array($miCuentaAction)){
     $imagen=$row['ruta_archivo'];
     ?>
-<div class="col-md-3">
-<div class="card">
+<div class="col-md-3" >
+<div class="card" style="height: auto;">
   <div class="card-body">
     <h5 class="card-title">Archivos</h5> 
-<iframe src="<?php echo $imagen;?>" style="width:100%; height:100%;" frameborder="0" ></iframe>
+<iframe src="<?php echo $imagen;?>" style="width:100%; height:50%; overflow:hidden"  scrolling="no"></iframe>
+<br>
+        <br>
     <div class="btn-wrapper text-center">
     <a class="btn btn-success text-white"><i class="fa fa-check-circle-o" aria-hidden="true"></i></a> 
         <a class="btn btn-danger text-white" style=""><i class="fa fa-times" aria-hidden="true"></i></a>
+
   </div>
 </div>
 </div>

@@ -24,7 +24,8 @@ session_start();
 			if(move_uploaded_file($source, $target_path)) {	
 				$directorioInsert = "archivos/".$_POST['rutaExpediente']."/".$filename;
 				$insertArchivos = "INSERT INTO archivos VALUES(null, '$idExpediente', '$filename', '$directorioInsert');";
-				mysqli_query($insertArchivos);
+				echo $insertArchivos;
+				mysqli_query($con, $insertArchivos);
 
 				echo "El archivo $filename se ha almacenado en forma exitosa.<br>";
 				} else {	
