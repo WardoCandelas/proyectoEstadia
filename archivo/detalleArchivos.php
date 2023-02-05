@@ -52,8 +52,9 @@ while ($row=mysqli_fetch_array($miCuentaAction)){
 <br>
         <br>
     <div class="btn-wrapper text-center">
-    <a class="btn btn-success text-white"><i class="fa fa-check-circle-o" aria-hidden="true"></i></a> 
-        <a class="btn btn-danger text-white" style=""><i class="fa fa-times" aria-hidden="true"></i></a>
+      <a href="<?php echo $imagen;?>" class="btn btn-danger text-white" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>
+    <!--<a class="btn btn-success text-white"><i class="fa fa-check-circle-o" aria-hidden="true"></i></a> 
+        <a class="btn btn-danger text-white" style=""><i class="fa fa-times" aria-hidden="true"></i></a>-->
 
   </div>
 </div>
