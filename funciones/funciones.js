@@ -129,7 +129,7 @@ function detalleExpediente(id){
 
         $.ajax({
           type: "POST",
-          url: "archivo/validarArchivo",
+          url: "archivo/detalleArchivos",
           data: "id="+id,
           beforeSend: function(objeto){
             $("#main-derecha").html("Mensaje: Cargando...");
