@@ -19,7 +19,7 @@ if (!file_exists($micarpeta)) {
     //Insertamos los datos en la BD
     $insertExpediente = "INSERT INTO expedientes VALUES (null, '$nombreExpediente', '$claveExpediente', '$numeroExpediente', '$yearExpediente', '$observacionesExpediente', '0')";
     mysqli_query($con, $insertExpediente); 
-    echo $insertExpediente;?>
+    //echo $insertExpediente;?>
 
 <div class="alert alert-success" role="alert">
   Expediente Creado Correctamente!
