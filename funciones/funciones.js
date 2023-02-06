@@ -42,7 +42,7 @@
 
 //EXPEDIENTES
 //Busqueda de Expedientes
-    $("#buscar").submit(function(event) {
+    $("#buscarExpediente").submit(function(event) {
                 var parametros = $(this).serialize();
                 
                 $.ajax({
@@ -50,10 +50,10 @@
                   url: "buscador/buscarExpediente",
                   data: parametros,
                   beforeSend: function(objeto){
-                    $("#expediente").html("Mensaje: Buscando...");
+                    $("#main-derecha").html("Mensaje: Buscando...");
                   },
                   success: function(datos){
-                    $("#expediente").html(datos);
+                    $("#main-derecha").html(datos);
               
             }
           });
@@ -95,10 +95,10 @@ function detalleExpediente(id){
                   url: "expediente/nuevoExpedienteAction",
                   data: parametros,
                   beforeSend: function(objeto){
-                    $("#expediente").html("Mensaje: Creando...");
+                    $("#containerNuevoExpediente").html("Mensaje: Creando...");
                   },
                   success: function(datos){
-                    $("#expediente").html(datos);
+                    $("#containerNuevoExpediente").html(datos);
                     $('#reinscripcionFormBoton').attr("disabled", true);
               
             }
@@ -114,7 +114,7 @@ function detalleExpediente(id){
               type: "POST",
               url: "expediente/nuevoExpediente",
               success: function(response) {
-                  $('#expediente').html(response);
+                  $('#contenedorModal').html(response);
           
               }
          
@@ -157,11 +157,11 @@ function detalleExpediente(id){
           url: "archivo/formularioArchivo",
           data: "id="+id,
           beforeSend: function(objeto){
-            $("#expediente").html("Mensaje: Cargando...");
+            $("#contenedorModal").html("Mensaje: Cargando...");
             
           },
           success: function(datos){
-            $("#expediente").html(datos);
+            $("#contenedorModal").html(datos);
              //$('#delete_data').attr("disabled", true);
              //elementt.style.display='block';
                 //$('#save_data1').attr("disabled", false);

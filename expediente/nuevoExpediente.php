@@ -1,8 +1,8 @@
 <?php
 ?>
 <script type="text/javascript" src="funciones/funciones.js"></script>
-<form class="form-control" id="nuevoExpediente" name="nuevoExpediente">
-<h4 class="text-center">Nuevo Expediente</h4>
+<form class="" id="nuevoExpediente" name="nuevoExpediente">
+<!--<h4 class="text-center">Nuevo Expediente</h4>-->
 
 <div class="row">
 <div class="col-md-6">
@@ -12,17 +12,17 @@
 </div>
 </div>
 <br>
-
+	
 
 <div class="row">
 <div class="col-md-6">	
-<input class = "form-control" type = "text" placeholder = "Nombre expediente" name="no_e" required>
+<input class = "form-control" type = "text" placeholder = "Nombre" name="no_e" required>
 </div>
 <div class="col-md-3">	
-<input class = "form-control" type = "text" placeholder = "Clave expediente" name="c_e" required>
+<input class = "form-control" type = "text" placeholder = "Clave" name="c_e" required>
 </div>
 <div class="col-md-3">	
-<input class = "form-control" type = "text" placeholder = "Número expediente" name="nu_e" required>
+<input class = "form-control" type = "text" placeholder = "Número" name="nu_e" required>
 </div>
 </div>
 <br>	
@@ -41,4 +41,4 @@
 
 
 </form>
-<div id="expediente"></div>
+<div id="containerNuevoExpediente"></div>

@@ -3,6 +3,8 @@ session_start();
 if(empty($_SESSION['id_usuario'])){
     header("location: login");
 }
+include "query/query.php";
+include "conexionBD/conexionBD.php";
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +26,7 @@ if(empty($_SESSION['id_usuario'])){
     <link rel=icon href='imagenes/icono/icono.ico' sizes="64x64" type="image/ico">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript" src="funciones/funciones.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </head>
 
 
@@ -44,10 +47,10 @@ if(empty($_SESSION['id_usuario'])){
                     <a href="index" class="nav-item nav-link active" style="color:white;"><i class="fa fa-home" aria-hidden="true"></i></a>
                 </li>
                 <li class="nav-item">
-                      <a href="javascript:void(0)" class="nav-item nav-link" onclick="avisos()" style="color:white;"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                      <a href="javascript:void(0)" class="nav-item nav-link" onclick="avisos()" style="color:white;"><i class="fa fa-folder" aria-hidden="true"></i></a>
                 </li>
                 <li class="nav-item">
-                      <a  href="javascript:void(0)" class="nav-item nav-link" onclick="nuevoArchivo()" style="color:white;"><i class="fa fa-folder" aria-hidden="true"></i></a>
+                     
                 </li>
                 <li class="nav-item">
                       <a href="javascript:void(0)" class="nav-item nav-link" onclick="validarArchivo()" style="color:white;"><i class="fa fa-check-circle" aria-hidden="true"></i></a>
@@ -87,18 +90,53 @@ if(empty($_SESSION['id_usuario'])){
 
 <!--SECCION DE EN MEDIO DE LA INTERFAZ-->
 <section class="main-derecha" id="main-derecha" style="overflow-y: scroll;" >
-  <div class="col justify-content-center">
-    <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="Buscar archivo" aria-label="Recipient's username" aria-describedby="basic-addon2">
-    <div class="input-group-append">
-      <button class="btn btn-danger" style="color:white" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
-    </div>
-    </div>
+  <div class="col justify-content-center" id="contenedorIndex">
+        <script type="text/javascript" src="funciones/funciones.js"></script>
+    <form name="buscarExpediente" id="buscarExpediente" method="post"><!--FORMULARIO DE BUSQUEDA DE EXPEDIENTES OEAC 31/1/23-->  
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Buscar expediente" id="q" name="q">
+  <div class="input-group-append">
+    <button class="btn btn-danger" style="color:white" type="submit" id="buscarb" name="buscarb"><i class="fa fa-search" aria-hidden="true"></i></button>
+  </div></div>
+</form>
   
-    <div class="card">
+    <div class="card" id="cards">
       <div class="card-body">
-      <h5 class="card-title">Archivos</h5>
-      <p class="card-text">Aqui ira un listado de archivos.</p>
+      <h5 class="card-title">Expedientes <a type="button" href="javascript:void(0)" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal" onclick="nuevoExpediente()"  style="color:white;"><i class="fa fa-pencil" aria-hidden="true"></i></a></h5>
+      <p class="card-text"></p>
+<div id="tabla">
+<table class="table table-borderless">
+<thead class="encabezadotabla">
+<tr>
+    <th></th>
+    <th>Nombre</th>
+    <th>Clave</th>
+    <th>Numero</th>
+    <th>Año</th>
+    <th></th>
+</tr>
+</thead>
+<?php  
+foreach (getExpedientes($con) as $value) {
+?>
+<tr>
+ <td><img  class="expediente" src="https://cdn-icons-png.flaticon.com/512/3135/3135761.png"></td>
+    <td><b><?php echo $value['nombreExpediente']?></b></td>
+    <td><?php echo $value['claveExpediente']?></td>
+    <td><b><?php echo $value['numeroExpediente']?></b></td>
+    <td><b><?php echo $value['yearExpediente']?></b></td>
+    <td><button type="button" class="btn btn-danger" onclick="detalleArchivosExpediente('<?php echo $value['id']; ?>')" ><i class="fa fa-eye" aria-hidden="true"></i></button> <button type="button" class="btn btn-danger" onclick="nuevoArchivoFormulario('<?php echo $value['id']; ?>')" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa fa-plus" aria-hidden="true"></i></button></td>
+
+</tr>
+
+<?php } ?>
+
+
+
+    
+
+</table>
+</div>
       </div>
     </div>
   </div>
@@ -113,6 +151,62 @@ if(empty($_SESSION['id_usuario'])){
 
 
 
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal" data-backdrop="false" role="dialog"  tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Nuevo Expediente</Expe></h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" id="contenedorModal"></div>
+
+      <!-- Modal footer -->
+      
+
+    </div>
+  </div>
+</div>
+
+
+<style>
+.modal-backdrop {
+    /* bug fix - no overlay */    
+    /*display: none; */   
+}
+
+
+</style>
+
+
+
 </body>
 </html>
 
+<script>
+        $("#buscarExpediente").submit(function(event) {
+                var parametros = $(this).serialize();
+                
+                $.ajax({
+                  type: "POST",
+                  url: "buscador/buscarExpediente",
+                  data: parametros,
+                  beforeSend: function(objeto){
+                    $("#tabla").html("Mensaje: Buscando...");
+                  },
+                  success: function(datos){
+                    $("#tabla").html(datos);
+              
+            }
+          });
+                event.preventDefault();
+              })
+
+
+
+</script>
