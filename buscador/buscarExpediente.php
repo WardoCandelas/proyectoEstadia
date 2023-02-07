@@ -28,7 +28,7 @@ foreach (getExpedientesBusqueda($con, $q) as $value) {
     <td><?php echo $value['claveExpediente']?></td>
     <td><b><?php echo $value['numeroExpediente']?></b></td>
     <td><b><?php echo $value['yearExpediente']?></b></td>
-    <td><button type="button" class="btn btn-danger" onclick="nuevoArchivoFormulario('<?php echo $value['id']; ?>')"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></button></td>
+   <td><button type="button" class="btn btn-danger" onclick="detalleArchivosExpediente('<?php echo $value['id']; ?>')" ><i class="fa fa-eye" aria-hidden="true"></i></button> <button type="button" class="btn btn-danger" onclick="nuevoArchivoFormulario('<?php echo $value['id']; ?>')" data-bs-toggle="modal" data-bs-target="#myModalCarga"><i class="fa fa-plus" aria-hidden="true"></i></button></td>
 </tr>
 
 <?php } ?>

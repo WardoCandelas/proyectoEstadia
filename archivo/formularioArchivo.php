@@ -15,18 +15,24 @@ $expedienteId = $_POST['id'];
                         foreach (getExpedientesId($con, $expedienteId) as $value) {
                         $rutaExpediente = $value['nombreExpediente']."-".$value['claveExpediente']."-".$value['numeroExpediente']."-".$value['yearExpediente'];   
 } ?>                      
-<h4 class="text-center">Cargar Multiple Archivos -> <?php echo $rutaExpediente ?></h4>
+<h4 class="text-center"><img src="imagenes/modal/carga1.png" width="25" height="25"> <?php echo $rutaExpediente ?></h4>
               
                         
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Archivos</label>
-                            <div class="col-sm-8">
+                            <label class="col-sm-2 control-label"></label>
+                            
                                 <input type="hidden" name="idExpediente" value="<?php echo $expedienteId; ?>">
                                 <input type="hidden" name="rutaExpediente" value="<?php echo $rutaExpediente; ?>">
-                                <input type="file" class="form-control" id="file-upload" name="archivo[]" multiple="">
-                            </div>
+
+                                <div class="input-group col-md-9">
+<input type="file" class="form-control" id="file-upload" name="archivo[]" multiple="">
+  <div class="input-group-append">
+  <button type="submit" id="b1" class="btn btn-danger">Cargar</button>
+  </div></div>
+                                
+                          
                             
-                            <button type="submit" id="b1" class="btn btn-primary">Cargar</button>
+                            
                         </div>
                         
                     </form>

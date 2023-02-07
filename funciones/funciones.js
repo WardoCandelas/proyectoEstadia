@@ -42,24 +42,7 @@
 
 //EXPEDIENTES
 //Busqueda de Expedientes
-    $("#buscarExpediente").submit(function(event) {
-                var parametros = $(this).serialize();
-                
-                $.ajax({
-                  type: "POST",
-                  url: "buscador/buscarExpediente",
-                  data: parametros,
-                  beforeSend: function(objeto){
-                    $("#main-derecha").html("Mensaje: Buscando...");
-                  },
-                  success: function(datos){
-                    $("#main-derecha").html(datos);
-              
-            }
-          });
-                event.preventDefault();
-              })
-
+ 
 
 //DETALLE EXPEDIENTE
 function detalleExpediente(id){
@@ -100,6 +83,14 @@ function detalleExpediente(id){
                   success: function(datos){
                     $("#containerNuevoExpediente").html(datos);
                     $('#reinscripcionFormBoton').attr("disabled", true);
+                    $("#tabla").load(" #tabla");
+
+                    setTimeout( function(){ 
+    $('#nuevoExpediente')[0].reset();
+    $("#cerrarModal").trigger('click'); 
+  }  , 5000 );
+                   
+
               
             }
           });
@@ -161,7 +152,7 @@ function detalleExpediente(id){
             
           },
           success: function(datos){
-            $("#contenedorModal").html(datos);
+            $("#contenedorModalCarga").html(datos);
              //$('#delete_data').attr("disabled", true);
              //elementt.style.display='block';
                 //$('#save_data1').attr("disabled", false);

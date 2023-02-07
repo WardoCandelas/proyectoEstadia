@@ -80,7 +80,32 @@ include "conexionBD/conexionBD.php";
 </nav>
 
 
+<?php 
+$numElementos = 5;
+ 
+// Recogemos el parametro pag, en caso de que no exista, lo seteamos a 1
+if (isset($_GET['pag'])) {
+    $pagina = $_GET['pag'];
+} else {
+    $pagina = 1;
+}
+ 
+// (($pagina - 1) * $numElementos) me indica desde donde debemos empezar a mostrar registros
+$sql = "SELECT * FROM expedientes LIMIT " . (($pagina - 1) * $numElementos)  . "," . $numElementos;
+ 
+// Ejecutamos la consulta
+$resultado = mysqli_query($con, $sql);
+ 
+// Contamos el número total de registros
+$sql = "SELECT count(*) as id FROM expedientes";
+ 
+// Ejecutamos la consulta
+$resultadoMaximo = mysqli_query($con, $sql);
+ 
+// Recojo el numero de registros de forma rápida
+$maximoElementos = mysqli_fetch_assoc($resultadoMaximo)['id'];
 
+?>
 
 <div class="contenedor-principal">
 
@@ -102,7 +127,7 @@ include "conexionBD/conexionBD.php";
   
     <div class="card" id="cards">
       <div class="card-body">
-      <h5 class="card-title">Expedientes <a type="button" href="javascript:void(0)" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal" onclick="nuevoExpediente()"  style="color:white;"><i class="fa fa-pencil" aria-hidden="true"></i></a></h5>
+      <h5 class="card-title">Expedientes <a type="button" href="javascript:void(0)" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal" onclick="nuevoExpediente()"  style="color:white; text-align: right;"><i class="fa fa-pencil" aria-hidden="true"></i></a></h5>
       <p class="card-text"></p>
 <div id="tabla">
 <table class="table table-borderless">
@@ -117,15 +142,15 @@ include "conexionBD/conexionBD.php";
 </tr>
 </thead>
 <?php  
-foreach (getExpedientes($con) as $value) {
+  while ($fila = mysqli_fetch_assoc($resultado)) {
 ?>
 <tr>
  <td><img  class="expediente" src="https://cdn-icons-png.flaticon.com/512/3135/3135761.png"></td>
-    <td><b><?php echo $value['nombreExpediente']?></b></td>
-    <td><?php echo $value['claveExpediente']?></td>
-    <td><b><?php echo $value['numeroExpediente']?></b></td>
-    <td><b><?php echo $value['yearExpediente']?></b></td>
-    <td><button type="button" class="btn btn-danger" onclick="detalleArchivosExpediente('<?php echo $value['id']; ?>')" ><i class="fa fa-eye" aria-hidden="true"></i></button> <button type="button" class="btn btn-danger" onclick="nuevoArchivoFormulario('<?php echo $value['id']; ?>')" data-bs-toggle="modal" data-bs-target="#myModal"><i class="fa fa-plus" aria-hidden="true"></i></button></td>
+    <td><b><?php echo $fila['nombreExpediente']?></b></td>
+    <td><?php echo $fila['claveExpediente']?></td>
+    <td><b><?php echo $fila['numeroExpediente']?></b></td>
+    <td><b><?php echo $fila['yearExpediente']?></b></td>
+    <td><button type="button" class="btn btn-danger" onclick="detalleArchivosExpediente('<?php echo $fila['id']; ?>')" ><i class="fa fa-eye" aria-hidden="true"></i></button> <button type="button" class="btn btn-danger" onclick="nuevoArchivoFormulario('<?php echo $fila['id']; ?>')" data-bs-toggle="modal" data-bs-target="#myModalCarga"><i class="fa fa-plus" aria-hidden="true"></i></button></td>
 
 </tr>
 
@@ -136,6 +161,66 @@ foreach (getExpedientes($con) as $value) {
     
 
 </table>
+<div style="text-align: right;">
+    <?php
+    // Si existe el parametro pag
+    if (isset($_GET['pag'])) {
+        // Si pag es mayor que 1, ponemos un enlace al anterior
+        if ($_GET['pag'] > 1) {
+            ?>
+            <a href="index?pag=<?php echo $_GET['pag'] - 1; ?>"><button class="btn btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i></button></a>
+        <?php
+                // Sino deshabilito el botón
+            } else {
+                ?>
+            <a href="#"><button class="btn btn-secondary" disabled><i class="fa fa-arrow-left" aria-hidden="true"></i></button></a>
+        <?php
+            }
+            ?>
+ 
+    <?php
+    } else {
+        // Sino deshabilito el botón
+        ?>
+        <a href="#"><button class="btn btn-secondary" disabled><i class="fa fa-arrow-left" aria-hidden="true"></i></button></a>
+        <?php
+    }
+ 
+         
+ 
+    // Si existe la paginacion 
+    if (isset($_GET['pag'])) {
+        // Si el numero de registros actual es superior al maximo
+        if ((($pagina) * $numElementos) < $maximoElementos) {
+            ?>
+        <a href="index?pag=<?php echo $_GET['pag'] + 1; ?>"><button class="btn btn-secondary"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+</button></a>
+    <?php
+            // Sino deshabilito el botón
+        } else {
+            ?>
+        <a href="#"><button class="btn btn-secondary" disabled><i class="fa fa-arrow-right" aria-hidden="true"></i></button></a>
+    <?php
+        }
+ 
+        ?>
+ 
+    <?php
+        // Sino deshabilito el botón
+    } else {
+        ?>
+        <a href="index?pag=2"><button class="btn btn-secondary"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+</button></a>
+    <?php
+    }
+ 
+ 
+    ?>
+ 
+ 
+</div>
+
+
 </div>
       </div>
     </div>
@@ -159,8 +244,8 @@ foreach (getExpedientes($con) as $value) {
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Nuevo Expediente</Expe></h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <h4 class="modal-title"><img src="imagenes/modal/carga1.png" width="60" height="60"> Nuevo Expediente</Expe></h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" id="cerrarModal"></button>
       </div>
 
       <!-- Modal body -->
@@ -173,6 +258,28 @@ foreach (getExpedientes($con) as $value) {
   </div>
 </div>
 
+
+
+<!-- The Modal -->
+<div class="modal fade" id="myModalCarga" data-backdrop="false" role="dialog"  tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title"><img src="imagenes/modal/carga.png" width="60" height="60">Carga de archivos a expediente</Expe></h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" id="cerrarModal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" id="contenedorModalCarga"></div>
+
+      <!-- Modal footer -->
+      
+
+    </div>
+  </div>
+</div>
 
 <style>
 .modal-backdrop {
@@ -208,5 +315,7 @@ foreach (getExpedientes($con) as $value) {
               })
 
 
-
+function cerrar(){
+ 
+}
 </script>
