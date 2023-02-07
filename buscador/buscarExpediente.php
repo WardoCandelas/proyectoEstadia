@@ -20,7 +20,7 @@ $q = $_POST['q'];
 </tr>
 </thead>
 <?php 
-foreach (getExpedientesBusqueda($con, $q) as $value) {
+foreach (getArchivosDeExpediente($con, $q) as $value) {
 ?>
 <tr>
  <td><img  class="expediente" src="https://cdn-icons-png.flaticon.com/512/3135/3135761.png"></td>

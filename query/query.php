@@ -91,3 +91,20 @@ return $resultado;
 
   
 
+function getArchivosBusqueda($con, $q ,$id){
+$dir = array();
+$queryExpedientes="SELECT * FROM archivos WHERE id_archivo LIKE '%$q%' OR nombre_archivo LIKE '%$q%' and id_expediente = '$id'";
+$array=mysqli_query($con, $queryExpedientes);
+
+
+while ($row = mysqli_fetch_assoc($array)) {
+
+        $dir[] = $row;   
+}
+
+$dirJson = json_encode($dir);
+$resultado = json_decode($dirJson, true);
+
+return $resultado;
+
+}

@@ -46,9 +46,7 @@ include "conexionBD/conexionBD.php";
                 <li class="nav-item active">
                     <a href="index" class="nav-item nav-link active" style="color:white;"><i class="fa fa-home" aria-hidden="true"></i></a>
                 </li>
-                <li class="nav-item">
-                      <a href="javascript:void(0)" class="nav-item nav-link" onclick="avisos()" style="color:white;"><i class="fa fa-folder" aria-hidden="true"></i></a>
-                </li>
+               
                 <li class="nav-item">
                      
                 </li>
@@ -91,13 +89,13 @@ if (isset($_GET['pag'])) {
 }
  
 // (($pagina - 1) * $numElementos) me indica desde donde debemos empezar a mostrar registros
-$sql = "SELECT * FROM expedientes LIMIT " . (($pagina - 1) * $numElementos)  . "," . $numElementos;
+$sql = "SELECT * FROM expedientes ORDER BY fecha DESC LIMIT " . (($pagina - 1) * $numElementos)  . "," . $numElementos;
  
 // Ejecutamos la consulta
 $resultado = mysqli_query($con, $sql);
  
 // Contamos el número total de registros
-$sql = "SELECT count(*) as id FROM expedientes";
+$sql = "SELECT count(*) as id FROM expedientes ORDER BY fecha DESC";
  
 // Ejecutamos la consulta
 $resultadoMaximo = mysqli_query($con, $sql);

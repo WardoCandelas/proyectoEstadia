@@ -27,14 +27,16 @@ $idexp = $_POST['id']
 </style>
 
 <div class="col justify-content-center">
-    
+      <form name="buscarArchivo" id="buscarArchivo" method="post"><!--FORMULARIO DE BUSQUEDA DE archivos OEAC 31/1/23-->  
     <div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Buscar archivo" aria-label="Recipient's username" aria-describedby="basic-addon2">
+  <input type="text" class="form-control" placeholder="Buscar archivo" id="q" name="q" aria-label="" aria-describedby="basic-addon2">
+  <input type="hidden" name="idExpediente" value="<?php echo $idexp;?>">
   <div class="input-group-append">
-    <button class="btn btn-danger" style="color:white" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+    <button class="btn btn-danger" style="color:white" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
   </div></div>
+</form>
   
-<div class="row">
+<div class="row" id="tablaArchivos">
     <?php
 
 $miCuenta="SELECT ruta_archivo FROM archivos where id_expediente = '$idexp'";
@@ -67,3 +69,29 @@ while ($row=mysqli_fetch_array($miCuentaAction)){
 
 </div>
 </div>
+
+
+<script>
+        $("#buscarArchivo").submit(function(event) {
+                var parametros = $(this).serialize();
+                
+                $.ajax({
+                  type: "POST",
+                  url: "buscador/buscarArchivo",
+                  data: parametros,
+                  beforeSend: function(objeto){
+                    $("#tablaArchivos").html("Mensaje: Buscando...");
+                  },
+                  success: function(datos){
+                    $("#tablaArchivos").html(datos);
+              
+            }
+          });
+                event.preventDefault();
+              })
+
+
+function cerrar(){
+ 
+}
+</script>
