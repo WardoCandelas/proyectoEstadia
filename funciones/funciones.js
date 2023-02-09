@@ -87,7 +87,10 @@ function detalleExpediente(id){
 
                     setTimeout( function(){ 
     $('#nuevoExpediente')[0].reset();
-    $("#cerrarModal").trigger('click'); 
+    $('#reinscripcionFormBoton').attr("disabled", false);
+    $("#alerta").hide();
+    $("#cerrarModal").trigger('click');
+
   }  , 5000 );
                    
 

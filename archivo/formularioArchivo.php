@@ -3,7 +3,7 @@ include "../conexionBD/conexionBD.php";
 include "../query/query.php";
 session_start();
 
-
+//Recibimos el ID del expediente del cual seran los archivos
 $expedienteId = $_POST['id'];
 ?>
    <div class="container">     
@@ -25,7 +25,7 @@ $expedienteId = $_POST['id'];
                                 <input type="hidden" name="rutaExpediente" value="<?php echo $rutaExpediente; ?>">
 
                                 <div class="input-group col-md-9">
-<input type="file" class="form-control" id="file-upload" name="archivo[]" multiple="">
+<input type="file" class="form-control" id="file-upload" name="archivo[]" multiple="" required>
   <div class="input-group-append">
   <button type="submit" id="b1" class="btn btn-danger">Cargar</button>
   </div></div>
@@ -60,7 +60,14 @@ event.preventDefault();
                   success: function(datos){
                     $("#resultado").html(datos);
                     $('#b1').attr("disabled", true);
-              //load(1);
+                                     
+                                     setTimeout( function(){ 
+    $('#form1')[0].reset();
+    $('#b1').attr("disabled", false);
+    $("#alerta").hide();
+    $("#cerrarModal1").trigger('click');
+
+  }  , 5000 );
               
             }
           });

@@ -1,8 +1,9 @@
 <?php
 include "../conexionBD/conexionBD.php";
+include "../query/query.php";
 session_start();
 
-
+//Recibimos el ID del expediente a consultar
 $idexp = $_POST['id']
 ?>
 
@@ -29,30 +30,44 @@ $idexp = $_POST['id']
 <div class="col justify-content-center">
       <form name="buscarArchivo" id="buscarArchivo" method="post"><!--FORMULARIO DE BUSQUEDA DE archivos OEAC 31/1/23-->  
     <div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Buscar archivo" id="q" name="q" aria-label="" aria-describedby="basic-addon2">
+  <input type="text" class="form-control" placeholder="Buscar archivo" id="q" name="q" aria-label="" aria-describedby="basic-addon2" required>
   <input type="hidden" name="idExpediente" value="<?php echo $idexp;?>">
   <div class="input-group-append">
     <button class="btn btn-danger" style="color:white" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
   </div></div>
 </form>
-  
+</div>  
+
+<div class="col justify-content-center">
+<?php foreach (getExpedientesId($con, $idexp) as $value) { ?>
+<h4 style="text-align: center; color: red;">Expediente -> <?php echo $value['nombreExpediente']?></h4>
+<?php } ?>
+</div> 
+
 <div class="row" id="tablaArchivos">
     <?php
 
-$miCuenta="SELECT ruta_archivo FROM archivos where id_expediente = '$idexp'";
+$miCuenta="SELECT ruta_archivo, nombre_archivo FROM archivos where id_expediente = '$idexp'";
 
 $miCuentaAction=mysqli_query($con, $miCuenta);
-//echo $miCuentaAction;
+//echo $miCuenta;
+
+if(mysqli_num_rows($miCuentaAction) >= 1){
+
 while ($row=mysqli_fetch_array($miCuentaAction)){
     $imagen=$row['ruta_archivo'];
+    $nombreArchivo=$row['nombre_archivo'];
     ?>
-<div class="col-md-3" >
+<div class="col-md-3">
 <div class="card" style="height: auto;">
   <div class="card-body">
-    <h5 class="card-title">Archivos</h5> 
+    <h5 class="card-title"></h5> 
 <iframe src="<?php echo $imagen;?>" style="width:100%; height:50%; overflow:hidden"  scrolling="no"></iframe>
 <br>
         <br>
+<div class="col justify-content-center">
+        <p class="card-text"><?php echo str_replace( ".pdf", '', $nombreArchivo)?></p>
+      </div>
     <div class="btn-wrapper text-center">
       <a href="<?php echo $imagen;?>" class="btn btn-danger text-white" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i></a>
     <!--<a class="btn btn-success text-white"><i class="fa fa-check-circle-o" aria-hidden="true"></i></a> 
@@ -63,12 +78,23 @@ while ($row=mysqli_fetch_array($miCuentaAction)){
 </div>
 </div>
 
-<?php } ?>
+<?php }
+}else{ ?>
+
+ <div class="alert alert-danger" id="alerta" role="alert">
+  Error: El Expediente no contiene archivos!
+</div>
+
+
+
+<?php }
+
+?>
 
 
 
 </div>
-</div>
+
 
 
 <script>

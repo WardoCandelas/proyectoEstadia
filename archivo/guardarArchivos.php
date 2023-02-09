@@ -24,12 +24,22 @@ session_start();
 			if(move_uploaded_file($source, $target_path)) {	
 				$directorioInsert = "archivos/".$_POST['rutaExpediente']."/".$filename;
 				$insertArchivos = "INSERT INTO archivos VALUES(null, '$idExpediente', '$filename', '$directorioInsert');";
-				echo $insertArchivos;
 				mysqli_query($con, $insertArchivos);
+			?>
+			<div class="alert alert-success" id="alerta" role="alert">
+  			El archivo <?php echo $filename; ?>, se ha almacenado de forma exitosa.<br>
+			</div>
 
-				echo "El archivo $filename se ha almacenado en forma exitosa.<br>";
+<?php 
+
+				
 				} else {	
-				echo "Ha ocurrido un error, por favor inténtelo de nuevo.<br>";
+				?>
+			<div class="alert alert-success" id="alerta" role="alert">
+  			Ha ocurrido un error con el archivo <?php echo $filename; ?>, intentalo de nuevo<br>
+			</div>
+
+<?php 
 			}
 			closedir($dir); //Cerramos el directorio de destino
 		}

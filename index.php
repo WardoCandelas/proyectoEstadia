@@ -89,13 +89,13 @@ if (isset($_GET['pag'])) {
 }
  
 // (($pagina - 1) * $numElementos) me indica desde donde debemos empezar a mostrar registros
-$sql = "SELECT * FROM expedientes ORDER BY fecha DESC LIMIT " . (($pagina - 1) * $numElementos)  . "," . $numElementos;
+$sql = "SELECT * FROM expedientes where estatus_expediente !='0' ORDER BY fecha DESC LIMIT " . (($pagina - 1) * $numElementos)  . "," . $numElementos;
  
 // Ejecutamos la consulta
 $resultado = mysqli_query($con, $sql);
  
 // Contamos el número total de registros
-$sql = "SELECT count(*) as id FROM expedientes ORDER BY fecha DESC";
+$sql = "SELECT count(*) as id FROM expedientes where estatus_expediente !='0' ORDER BY fecha DESC";
  
 // Ejecutamos la consulta
 $resultadoMaximo = mysqli_query($con, $sql);
@@ -265,8 +265,8 @@ $maximoElementos = mysqli_fetch_assoc($resultadoMaximo)['id'];
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title"><img src="imagenes/modal/carga.png" width="60" height="60">Carga de archivos a expediente</Expe></h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" id="cerrarModal"></button>
+        <h4 class="modal-title"><img src="imagenes/modal/carga.png" width="60" height="60">Carga de archivos a expediente</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" id="cerrarModal1"></button>
       </div>
 
       <!-- Modal body -->
