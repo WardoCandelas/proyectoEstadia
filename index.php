@@ -5,6 +5,8 @@ if(empty($_SESSION['id_usuario'])){
 }
 include "query/query.php";
 include "conexionBD/conexionBD.php";
+
+
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +36,7 @@ include "conexionBD/conexionBD.php";
 <body>
 <nav class="navbar navbar-light navbar-expand-md bg-danger justify-content-center fixed-top">
     <div class="container">
-        <a href="index" class="navbar-brand d-flex w-50 me-auto">
+        <a href="https://www.isidrofabela.gob.mx/" class="navbar-brand d-flex w-50 me-auto">
             <img src="imagenes/navbar/icono.png" height="30" alt="CoolBrand">
         </a>
         </a>
@@ -46,13 +48,6 @@ include "conexionBD/conexionBD.php";
                 <li class="nav-item active">
                     <a href="index" class="nav-item nav-link active" style="color:white;"><i class="fa fa-home" aria-hidden="true"></i></a>
                 </li>
-               
-                <li class="nav-item">
-                     
-                </li>
-                <li class="nav-item">
-                      <a href="javascript:void(0)" class="nav-item nav-link" onclick="validarArchivo()" style="color:white;"><i class="fa fa-check-circle" aria-hidden="true"></i></a>
-                </li>
             </ul>
             <ul class="nav navbar-nav ms-auto w-100 justify-content-end">
              <li class="nav-item">
@@ -61,17 +56,7 @@ include "conexionBD/conexionBD.php";
                 <li class="nav-item">
                     <a class="nav-link" href="servicios/logout" style="color:white;"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:white;"><i class="fa fa-cog" aria-hidden="true"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarScrollingDropdown">
-                        <li><a class="dropdown-item" href="#">Item</a></li>
-                        <li><a class="dropdown-item" href="#">Item</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Item</a></li>
-                    </ul>
-                </li>
+               
             </ul>
         </div>
     </div>
@@ -89,13 +74,13 @@ if (isset($_GET['pag'])) {
 }
  
 // (($pagina - 1) * $numElementos) me indica desde donde debemos empezar a mostrar registros
-$sql = "SELECT * FROM expedientes where estatus_expediente !='0' ORDER BY fecha DESC LIMIT " . (($pagina - 1) * $numElementos)  . "," . $numElementos;
+$sql = "SELECT * FROM expedientes ORDER BY fecha DESC LIMIT " . (($pagina - 1) * $numElementos)  . "," . $numElementos;
  
 // Ejecutamos la consulta
 $resultado = mysqli_query($con, $sql);
  
 // Contamos el número total de registros
-$sql = "SELECT count(*) as id FROM expedientes where estatus_expediente !='0' ORDER BY fecha DESC";
+$sql = "SELECT count(*) as id FROM expedientes  ORDER BY fecha DESC";
  
 // Ejecutamos la consulta
 $resultadoMaximo = mysqli_query($con, $sql);
@@ -125,7 +110,7 @@ $maximoElementos = mysqli_fetch_assoc($resultadoMaximo)['id'];
   
     <div class="card" id="cards">
       <div class="card-body">
-      <h5 class="card-title">Expedientes <a type="button" href="javascript:void(0)" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal" onclick="nuevoExpediente()"  style="color:white; text-align: right;"><i class="fa fa-pencil" aria-hidden="true"></i></a></h5>
+      <h5 class="card-title">Expedientes <a type="button" href="javascript:void(0)" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#myModal" onclick="nuevoExpediente()"  style="color:white; text-align: right;"><i class="fa fa-pencil" aria-hidden="true"></i></a></h5>
       <p class="card-text"></p>
 <div id="tabla">
 <table class="table table-borderless">
@@ -137,6 +122,7 @@ $maximoElementos = mysqli_fetch_assoc($resultadoMaximo)['id'];
     <th>Numero</th>
     <th>Año</th>
     <th></th>
+    <th></th>
 </tr>
 </thead>
 <?php  
@@ -144,21 +130,43 @@ $maximoElementos = mysqli_fetch_assoc($resultadoMaximo)['id'];
 ?>
 <tr>
  <td><img  class="expediente" src="https://cdn-icons-png.flaticon.com/512/3135/3135761.png"></td>
-    <td><b><?php echo $fila['nombreExpediente']?></b></td>
+    <td><b><i><?php echo $fila['nombreExpediente']?></i></b></td>
     <td><?php echo $fila['claveExpediente']?></td>
-    <td><b><?php echo $fila['numeroExpediente']?></b></td>
+    <td><?php echo $fila['numeroExpediente']?></td>
     <td><b><?php echo $fila['yearExpediente']?></b></td>
-    <td><button type="button" class="btn btn-danger" onclick="detalleArchivosExpediente('<?php echo $fila['id']; ?>')" ><i class="fa fa-eye" aria-hidden="true"></i></button> <button type="button" class="btn btn-danger" onclick="nuevoArchivoFormulario('<?php echo $fila['id']; ?>')" data-bs-toggle="modal" data-bs-target="#myModalCarga"><i class="fa fa-plus" aria-hidden="true"></i></button></td>
+
+    <td>
+        <?php if($fila['estatus_expediente'] == 1){ ?>
+<p class="text-success"><b>
+Aprobado
+</b></p>
+<?php } elseif ($fila['estatus_expediente'] == 2) { ?>
+<p class="text-danger"><b>
+No Aprobado
+</b></p>
+<?php } elseif ($fila['estatus_expediente'] == 0) { ?>
+<p class="text-warning"><b>
+En revisión
+</b></p>
+<?php } ?>
+    </td>
+
+    <td>
+    <button type="button" class="btn btn-secondary" onclick="detalleArchivosExpediente('<?php echo $fila['id']; ?>')" ><i class="fa fa-eye" aria-hidden="true"></i></button>
+    
+    <button type="button" class="btn btn-secondary" onclick="nuevoArchivoFormulario('<?php echo $fila['id']; ?>')" data-bs-toggle="modal" data-bs-target="#myModalCarga"><i class="fa fa-plus" aria-hidden="true"></i></button>
+
+    <button type="button" class="btn btn-secondary" onclick="editarExpediente('<?php echo $fila['id']; ?>')" data-bs-toggle="modal" data-bs-target="#modalEditarExpediente"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+
+    <button type="button" class="btn btn-secondary" onclick="eliminarExpediente('<?php echo $fila['id']; ?>')" data-bs-toggle="modal" data-bs-target="#modalEliminarExpediente"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
 
 </tr>
 
 <?php } ?>
 
-
-
-    
-
 </table>
+
+
 <div style="text-align: right;">
     <?php
     // Si existe el parametro pag
@@ -171,7 +179,7 @@ $maximoElementos = mysqli_fetch_assoc($resultadoMaximo)['id'];
                 // Sino deshabilito el botón
             } else {
                 ?>
-            <a href="#"><button class="btn btn-secondary" disabled><i class="fa fa-arrow-left" aria-hidden="true"></i></button></a>
+            <a href="#"><button class="btn btn-danger" disabled><i class="fa fa-arrow-left" aria-hidden="true"></i></button></a>
         <?php
             }
             ?>
@@ -180,14 +188,14 @@ $maximoElementos = mysqli_fetch_assoc($resultadoMaximo)['id'];
     } else {
         // Sino deshabilito el botón
         ?>
-        <a href="#"><button class="btn btn-secondary" disabled><i class="fa fa-arrow-left" aria-hidden="true"></i></button></a>
+        <a href="#"><button class="btn btn-danger" disabled><i class="fa fa-arrow-left" aria-hidden="true"></i></button></a>
         <?php
     }
  
          
  
     // Si existe la paginacion 
-    if (isset($_GET['pag'])) {
+    if (isset($_GET['pag']) && (($pagina * $numElementos) > $maximoElementos)) {
         // Si el numero de registros actual es superior al maximo
         if ((($pagina) * $numElementos) < $maximoElementos) {
             ?>
@@ -197,7 +205,7 @@ $maximoElementos = mysqli_fetch_assoc($resultadoMaximo)['id'];
             // Sino deshabilito el botón
         } else {
             ?>
-        <a href="#"><button class="btn btn-secondary" disabled><i class="fa fa-arrow-right" aria-hidden="true"></i></button></a>
+        <a href="#"><button class="btn btn-danger" disabled><i class="fa fa-arrow-right" aria-hidden="true"></i></button></a>
     <?php
         }
  
@@ -207,7 +215,7 @@ $maximoElementos = mysqli_fetch_assoc($resultadoMaximo)['id'];
         // Sino deshabilito el botón
     } else {
         ?>
-        <a href="index?pag=2"><button class="btn btn-secondary"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+        <a href="index?pag=2"><button class="btn btn-danger"><i class="fa fa-arrow-right" aria-hidden="true"></i>
 </button></a>
     <?php
     }
@@ -225,15 +233,12 @@ $maximoElementos = mysqli_fetch_assoc($resultadoMaximo)['id'];
   </div>
 </section>
 
+
 <!--SECCION IZQUIERDA DE LA INTERFAZ -->
 <section class="main-izquierda">
 </section>
 
  </div> 
-
-
-
-
 
 <!-- The Modal -->
 <div class="modal fade" id="myModal" data-backdrop="false" role="dialog"  tabindex="-1">
@@ -279,16 +284,42 @@ $maximoElementos = mysqli_fetch_assoc($resultadoMaximo)['id'];
   </div>
 </div>
 
-<style>
-.modal-backdrop {
-    /* bug fix - no overlay */    
-    /*display: none; */   
-}
+
+<!-- The Modal -->
+<div class="modal fade" id="modalEditarExpediente" data-backdrop="false" role="dialog"  tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title"><img src="imagenes/modal/carga.png" width="60" height="60">Editar Expediente</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" id="cerrarModal1"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" id="contenedorModalEditarExpediente"></div>
+
+    </div>
+  </div>
+</div>
 
 
-</style>
+<div class="modal fade" id="modalEliminarExpediente" data-backdrop="false" role="dialog"  tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
 
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title"><img src="imagenes/modal/carga.png" width="60" height="60">Eliminar Expediente</h4>
+       <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" id="cerrarModal1"></button>-->
+      </div>
 
+      <!-- Modal body -->
+      <div class="modal-body" id="contenedorModalEliminarExpediente"></div>
+
+    </div>
+  </div>
+</div>
 
 </body>
 </html>

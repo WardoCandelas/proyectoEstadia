@@ -31,7 +31,7 @@
     
     $.ajax({
               type: "POST",
-              url: "archivo/validarArchivo",
+              url: "expediente/validarExpediente",
               success: function(response) {
                   $('#main-derecha').html(response);
                   //$('#navbarCollapse').collapse('hide');
@@ -91,7 +91,7 @@ function detalleExpediente(id){
     $("#alerta").hide();
     $("#cerrarModal").trigger('click');
 
-  }  , 5000 );
+  }  , 3000 );
                    
 
               
@@ -131,9 +131,10 @@ function detalleExpediente(id){
           },
           success: function(datos){
             $("#main-derecha").html(datos);
-             //$('#delete_data').attr("disabled", true);
+             $('#delete_data').attr("disabled", true);
              //elementt.style.display='block';
                 //$('#save_data1').attr("disabled", false);
+
                 
               }
             });
@@ -156,6 +157,90 @@ function detalleExpediente(id){
           },
           success: function(datos){
             $("#contenedorModalCarga").html(datos);
+             //$('#delete_data').attr("disabled", true);
+             //elementt.style.display='block';
+                //$('#save_data1').attr("disabled", false);
+                
+              }
+            });
+        event.preventDefault();
+    
+ }
+
+
+
+
+//validarExpedientes
+function validarExpedientes(id, accion){
+
+        $.ajax({
+          type: "POST",
+          url: "expediente/validarExpediente",
+          data: "id="+id+'&accion='+accion,
+          beforeSend: function(objeto){
+            $("#validacion").html("Mensaje: Cargando...");
+            
+          },
+          success: function(datos){
+            $("#validacion").html(datos);
+             $("#estatusActual").hide();
+            
+   setTimeout( function(){ 
+   
+if (accion = '1') {
+$('#btnValidar').attr("disabled", true);
+}
+else{
+  $('#btnNoValidar').attr("disabled", true);
+}
+    $("#alertaValidacion").hide();
+
+  }  , 2000 );
+
+
+              }
+            });
+        event.preventDefault();
+    
+ }
+
+
+ //Editar Expediente
+  function editarExpediente(id){
+
+        $.ajax({
+          type: "POST",
+          url: "expediente/editarExpediente",
+          data: "id="+id,
+          beforeSend: function(objeto){
+            $("#contenedorModalEditarExpediente").html("Mensaje: Cargando...");
+            
+          },
+          success: function(datos){
+            $("#contenedorModalEditarExpediente").html(datos);
+             //$('#delete_data').attr("disabled", true);
+             //elementt.style.display='block';
+                //$('#save_data1').attr("disabled", false);
+                
+              }
+            });
+        event.preventDefault();
+    
+ }
+
+
+  function eliminarExpediente(id){
+
+        $.ajax({
+          type: "POST",
+          url: "expediente/eliminarExpediente",
+          data: "id="+id,
+          beforeSend: function(objeto){
+            $("#contenedorModalEliminarExpediente").html("Mensaje: Cargando...");
+            
+          },
+          success: function(datos){
+            $("#contenedorModalEliminarExpediente").html(datos);
              //$('#delete_data').attr("disabled", true);
              //elementt.style.display='block';
                 //$('#save_data1').attr("disabled", false);

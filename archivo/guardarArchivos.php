@@ -3,7 +3,9 @@ include "../conexionBD/conexionBD.php";
 
 session_start();
 
- $idExpediente = $_POST['idExpediente'];
+
+
+ 	$idExpediente = $_POST['idExpediente'];
 	//Como el elemento es un arreglos utilizamos foreach para extraer todos los valores
 	foreach($_FILES["archivo"]['tmp_name'] as $key => $tmp_name)
 	{
@@ -26,13 +28,12 @@ session_start();
 				$insertArchivos = "INSERT INTO archivos VALUES(null, '$idExpediente', '$filename', '$directorioInsert');";
 				mysqli_query($con, $insertArchivos);
 			?>
+			<br>
 			<div class="alert alert-success" id="alerta" role="alert">
   			El archivo <?php echo $filename; ?>, se ha almacenado de forma exitosa.<br>
 			</div>
 
-<?php 
-
-				
+<?php 	
 				} else {	
 				?>
 			<div class="alert alert-success" id="alerta" role="alert">
@@ -44,4 +45,4 @@ session_start();
 			closedir($dir); //Cerramos el directorio de destino
 		}
 	}
-?>
+

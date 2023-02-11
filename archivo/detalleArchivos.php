@@ -2,6 +2,7 @@
 include "../conexionBD/conexionBD.php";
 include "../query/query.php";
 session_start();
+$privilegios = $_SESSION['rol'];
 
 //Recibimos el ID del expediente a consultar
 $idexp = $_POST['id']
@@ -38,13 +39,38 @@ $idexp = $_POST['id']
 </form>
 </div>  
 
+
+<?php if($privilegios == 1){ ?>
+<div class="col justify-content-center">
+<?php foreach (getExpedientesId($con, $idexp) as $value) { ?>
+<h4 style="text-align: center; color: red;"><button type="button" id="btnValidar" class="btn btn-success" onclick="validarExpedientes('<?php echo $idexp; ?>', '1')" ><i class="fa fa-check" aria-hidden="true"></i></button> Expediente -> <?php echo $value['nombreExpediente']?> 
+<button type="button" id="btnNoValidar" class="btn btn-danger" onclick="validarExpedientes('<?php echo $idexp; ?>', '0')" ><i class="fa fa-times" aria-hidden="true"></i></button></h4>
+<?php } ?>
+</div>
+
+<div id="estatusActual"> 
+<?php foreach (getExpedienteEstatus($con, $idexp) as $value) { 
+if($value['estatus_expediente'] == 1){ ?>
+<script>
+    $('#btnValidar').attr("disabled", true);
+</script>
+<?php } elseif ($value['estatus_expediente'] == 2) { ?>
+<script>
+    $('#btnNoValidar').attr("disabled", true);
+</script>
+<?php } 
+}?>
+</div>
+<div id="validacion"></div>
+
+<?php } else {?>
 <div class="col justify-content-center">
 <?php foreach (getExpedientesId($con, $idexp) as $value) { ?>
 <h4 style="text-align: center; color: red;">Expediente -> <?php echo $value['nombreExpediente']?></h4>
 <?php } ?>
-</div> 
-
-<div class="row" id="tablaArchivos">
+</div>
+<?php } ?>  
+<div class="row" id="tablaArchivos" style="overflow-y: scroll;   max-height: 100vh; overflow: auto;">
     <?php
 
 $miCuenta="SELECT ruta_archivo, nombre_archivo FROM archivos where id_expediente = '$idexp'";
@@ -81,8 +107,8 @@ while ($row=mysqli_fetch_array($miCuentaAction)){
 <?php }
 }else{ ?>
 
- <div class="alert alert-danger" id="alerta" role="alert">
-  Error: El Expediente no contiene archivos!
+ <div class="alert alert-warning" id="alerta" role="alert">
+  El Expediente no contiene archivos!
 </div>
 
 
@@ -117,7 +143,34 @@ while ($row=mysqli_fetch_array($miCuentaAction)){
               })
 
 
-function cerrar(){
- 
+ function validarExpedientes(id, accion){
+
+        $.ajax({
+          type: "POST",
+          url: "expediente/validarExpediente",
+          data: "id="+id+'&accion='+accion,
+          beforeSend: function(objeto){
+            $("#validacion").html("Mensaje: Cargando...");
+            
+          },
+          success: function(datos){
+            $("#validacion").html(datos);
+            
+   setTimeout( function(){ 
+   
+if (accion = 1) {
+$('#btnValidar').attr("disabled", true);
 }
+else{
+  $('#btnNoValidar').attr("disabled", true);
+}
+    $("#alertaValidacion").hide();
+  }  , 2000 );
+
+
+              }
+            });
+        event.preventDefault();
+    
+ }
 </script>

@@ -18,6 +18,7 @@ $queryAction = mysqli_query($con, $query);
 			
 
 				$_SESSION['id_usuario'] = $row['id_usuario'];
+				$_SESSION['rol'] = $row['privilegios'];
 				//$_SESSION['user_name'] = $row['nombre_alumno'];
 				
 			header("location: ../index");

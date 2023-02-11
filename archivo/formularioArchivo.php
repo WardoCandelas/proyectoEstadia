@@ -25,7 +25,7 @@ $expedienteId = $_POST['id'];
                                 <input type="hidden" name="rutaExpediente" value="<?php echo $rutaExpediente; ?>">
 
                                 <div class="input-group col-md-9">
-<input type="file" class="form-control" id="file-upload" name="archivo[]" multiple="" required>
+<input type="file" class="form-control" id="file-upload" name="archivo[]" multiple="" required accept="application/pdf">
   <div class="input-group-append">
   <button type="submit" id="b1" class="btn btn-danger">Cargar</button>
   </div></div>
